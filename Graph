@@ -1,0 +1,102 @@
+import java.util.*; class Graph {
+
+private int numVertices; private int[][] adjMatrix;
+
+
+
+public Graph(int numVertices) { this.numVertices = numVertices;
+
+adjMatrix = new int[numVertices][numVertices]; for (int i = 0; i < numVertices; ++i) {
+
+for (int j = 0; j < numVertices; ++j) { adjMatrix[i][j] = 0;
+
+}
+
+}
+
+}
+
+
+
+public void addEdge(int src, int dest) { adjMatrix[src][dest] = 1;
+
+}
+
+
+
+public void DFS(int startNode) {
+
+boolean[] visited = new boolean[numVertices]; for (int i = 0; i < numVertices; ++i) {
+
+visited[i] = false;
+
+}
+
+DFSUtil(startNode, visited);
+
+ 
+
+public void BFS(int startNode) {
+
+boolean[] visited = new boolean[numVertices]; for (int i = 0; i < numVertices; ++i) {
+
+visited[i] = false;
+
+}
+
+int[] queue = new int[numVertices]; int front = 0, rear = 0; visited[startNode] = true; queue[rear++] = startNode;
+
+while (front != rear) {
+
+int currentNode = queue[front++]; System.out.print(currentNode + " "); for (int i = 0; i < numVertices; ++i) {
+
+if (adjMatrix[currentNode][i] == 1 && !visited[i]) { visited[i] = true;
+
+queue[rear++] = i;
+
+}
+
+}
+
+}
+
+}
+
+
+
+private void DFSUtil(int startNode, boolean[] visited) { visited[startNode] = true; System.out.print(startNode + " ");
+
+for (int i = 0; i < numVertices; ++i) {
+
+if (adjMatrix[startNode][i] == 1 && !visited[i]) { DFSUtil(i, visited);
+
+}
+
+}
+
+}
+
+
+
+public static void main(String[] args) { Scanner scanner = new Scanner(System.in);
+
+System.out.print("Enter the number of cities: "); int numCities = scanner.nextInt();
+
+Graph graph = new Graph(numCities); System.out.print("Enter the number of edges: "); int numEdges = scanner.nextInt();
+
+System.out.println("Enter the edges (source destination):"); for (int i = 0; i < numEdges; ++i) {
+
+int src = scanner.nextInt(); int dest = scanner.nextInt(); graph.addEdge(src, dest);
+
+ 
+
+System.out.print("Enter the starting node for DFS and BFS: "); int startNode = scanner.nextInt();
+
+System.out.print("DFS Traversal: "); graph.DFS(startNode); System.out.println(); System.out.print("BFS Traversal: "); graph.BFS(startNode); scanner.close();
+
+}
+
+}
+
+
+
